@@ -66,9 +66,7 @@ export interface NativeResource {
 const debug = Debug('cordova-res:native');
 
 const IOS_APP_ICON_SET_NAME = 'AppIcon';
-const IOS_APP_ICON_SET_PATH = `App/App/Assets.xcassets/${IOS_APP_ICON_SET_NAME}.appiconset`;
 const IOS_SPLASH_IMAGE_SET_NAME = 'Splash';
-const IOS_SPLASH_IMAGE_SET_PATH = `App/App/Assets.xcassets/${IOS_SPLASH_IMAGE_SET_NAME}.imageset`;
 
 const ANDROID_RES_PATH = 'app/src/main/res';
 
@@ -183,141 +181,147 @@ const IOS_SPLASHES: readonly NativeResource[] = [
   },
 ];
 
-const ANDROID_ICONS: readonly NativeResource[] = [
-  {
-    type: NativeResourceType.ANDROID_LEGACY,
-    source: ANDROID_MDPI_ICON.src,
-    target: 'mipmap-mdpi/ic_launcher.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ROUND,
-    source: ANDROID_MDPI_ICON.src,
-    target: 'mipmap-mdpi/ic_launcher_round.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
-    source: ANDROID_MDPI_ADAPTIVE_ICON.foreground,
-    target: 'mipmap-mdpi/ic_launcher_foreground.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_LEGACY,
-    source: ANDROID_HDPI_ICON.src,
-    target: 'mipmap-hdpi/ic_launcher.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ROUND,
-    source: ANDROID_HDPI_ICON.src,
-    target: 'mipmap-hdpi/ic_launcher_round.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
-    source: ANDROID_HDPI_ADAPTIVE_ICON.foreground,
-    target: 'mipmap-hdpi/ic_launcher_foreground.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_LEGACY,
-    source: ANDROID_XHDPI_ICON.src,
-    target: 'mipmap-xhdpi/ic_launcher.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ROUND,
-    source: ANDROID_XHDPI_ICON.src,
-    target: 'mipmap-xhdpi/ic_launcher_round.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
-    source: ANDROID_XHDPI_ADAPTIVE_ICON.foreground,
-    target: 'mipmap-xhdpi/ic_launcher_foreground.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_LEGACY,
-    source: ANDROID_XXHDPI_ICON.src,
-    target: 'mipmap-xxhdpi/ic_launcher.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ROUND,
-    source: ANDROID_XXHDPI_ICON.src,
-    target: 'mipmap-xxhdpi/ic_launcher_round.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
-    source: ANDROID_XXHDPI_ADAPTIVE_ICON.foreground,
-    target: 'mipmap-xxhdpi/ic_launcher_foreground.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_LEGACY,
-    source: ANDROID_XXXHDPI_ICON.src,
-    target: 'mipmap-xxxhdpi/ic_launcher.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ROUND,
-    source: ANDROID_XXXHDPI_ICON.src,
-    target: 'mipmap-xxxhdpi/ic_launcher_round.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
-    source: ANDROID_XXXHDPI_ADAPTIVE_ICON.foreground,
-    target: 'mipmap-xxxhdpi/ic_launcher_foreground.png',
-  },
-];
+function androidIcons(assetSuffix: string): readonly NativeResource[] {
+  const suffix = assetSuffix ? `-${assetSuffix}` : '';
+  return [
+    {
+      type: NativeResourceType.ANDROID_LEGACY,
+      source: ANDROID_MDPI_ICON.src,
+      target: `mipmap-mdpi/ic_launcher${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ROUND,
+      source: ANDROID_MDPI_ICON.src,
+      target: `mipmap-mdpi/ic_launcher_round${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
+      source: ANDROID_MDPI_ADAPTIVE_ICON.foreground,
+      target: `mipmap-mdpi/ic_launcher_foreground${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_LEGACY,
+      source: ANDROID_HDPI_ICON.src,
+      target: `mipmap-hdpi/ic_launcher${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ROUND,
+      source: ANDROID_HDPI_ICON.src,
+      target: `mipmap-hdpi/ic_launcher_round${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
+      source: ANDROID_HDPI_ADAPTIVE_ICON.foreground,
+      target: `mipmap-hdpi/ic_launcher_foreground${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_LEGACY,
+      source: ANDROID_XHDPI_ICON.src,
+      target: `mipmap-xhdpi/ic_launcher${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ROUND,
+      source: ANDROID_XHDPI_ICON.src,
+      target: `mipmap-xhdpi/ic_launcher_round${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
+      source: ANDROID_XHDPI_ADAPTIVE_ICON.foreground,
+      target: `mipmap-xhdpi/ic_launcher_foreground${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_LEGACY,
+      source: ANDROID_XXHDPI_ICON.src,
+      target: `mipmap-xxhdpi/ic_launcher${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ROUND,
+      source: ANDROID_XXHDPI_ICON.src,
+      target: `mipmap-xxhdpi/ic_launcher_round${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
+      source: ANDROID_XXHDPI_ADAPTIVE_ICON.foreground,
+      target: `mipmap-xxhdpi/ic_launcher_foreground${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_LEGACY,
+      source: ANDROID_XXXHDPI_ICON.src,
+      target: `mipmap-xxxhdpi/ic_launcher${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ROUND,
+      source: ANDROID_XXXHDPI_ICON.src,
+      target: `mipmap-xxxhdpi/ic_launcher_round${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_ADAPTIVE_FOREGROUND,
+      source: ANDROID_XXXHDPI_ADAPTIVE_ICON.foreground,
+      target: `mipmap-xxxhdpi/ic_launcher_foreground${suffix}.png`,
+    },
+  ];
+}
 
-const ANDROID_SPLASHES: readonly NativeResource[] = [
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_MDPI_SCREEN.src,
-    target: 'drawable/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_MDPI_SCREEN.src,
-    target: 'drawable-land-mdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_HDPI_SCREEN.src,
-    target: 'drawable-land-hdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_XHDPI_SCREEN.src,
-    target: 'drawable-land-xhdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_XXHDPI_SCREEN.src,
-    target: 'drawable-land-xxhdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_LAND_XXXHDPI_SCREEN.src,
-    target: 'drawable-land-xxxhdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_PORT_MDPI_SCREEN.src,
-    target: 'drawable-port-mdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_PORT_HDPI_SCREEN.src,
-    target: 'drawable-port-hdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_PORT_XHDPI_SCREEN.src,
-    target: 'drawable-port-xhdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_PORT_XXHDPI_SCREEN.src,
-    target: 'drawable-port-xxhdpi/splash.png',
-  },
-  {
-    type: NativeResourceType.ANDROID_SPLASH,
-    source: ANDROID_PORT_XXXHDPI_SCREEN.src,
-    target: 'drawable-port-xxxhdpi/splash.png',
-  },
-];
+function androidSplashes(assetSuffix: string): readonly NativeResource[] {
+  const suffix = assetSuffix ? `-${assetSuffix}` : '';
+  return [
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_MDPI_SCREEN.src,
+      target: `drawable/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_MDPI_SCREEN.src,
+      target: `drawable-land-mdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_HDPI_SCREEN.src,
+      target: `drawable-land-hdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_XHDPI_SCREEN.src,
+      target: `drawable-land-xhdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_XXHDPI_SCREEN.src,
+      target: `drawable-land-xxhdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_LAND_XXXHDPI_SCREEN.src,
+      target: `drawable-land-xxxhdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_PORT_MDPI_SCREEN.src,
+      target: `drawable-port-mdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_PORT_HDPI_SCREEN.src,
+      target: `drawable-port-hdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_PORT_XHDPI_SCREEN.src,
+      target: `drawable-port-xhdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_PORT_XXHDPI_SCREEN.src,
+      target: `drawable-port-xxhdpi/splash${suffix}.png`,
+    },
+    {
+      type: NativeResourceType.ANDROID_SPLASH,
+      source: ANDROID_PORT_XXXHDPI_SCREEN.src,
+      target: `drawable-port-xxxhdpi/splash${suffix}.png`,
+    },
+  ];
+}
 
 function resourcesFor(
   resourcesDirectory: string,
@@ -325,6 +329,16 @@ function resourcesFor(
   assetType: string,
 ) {
   return path.join(resourcesDirectory, platform, assetType);
+}
+
+function iosAppIconSetPath(assetSuffix: string) {
+  const suffix = assetSuffix ? `-${assetSuffix}` : '';
+  return `App/App/Assets.xcassets/${IOS_APP_ICON_SET_NAME}${suffix}.appiconset`;
+}
+
+function iosSplashImageSetPath(assetSuffix: string) {
+  const suffix = assetSuffix ? `-${assetSuffix}` : '';
+  return `App/App/Assets.xcassets/${IOS_SPLASH_IMAGE_SET_NAME}${suffix}.imageset`;
 }
 
 async function copyImages(
@@ -358,6 +372,7 @@ export async function copyToNativeProject(
   resourcesDirectory: string,
   shouldCopyIcons: boolean,
   shouldCopySplash: boolean,
+  assetSuffix: string,
   logstream: NodeJS.WritableStream | null,
   errstream: NodeJS.WritableStream | null,
 ) {
@@ -368,6 +383,7 @@ export async function copyToNativeProject(
     if (shouldCopyIcons) {
       count += await copyImages(
         resourcesFor(resourcesDirectory, platform, 'icon'),
+        path.join(iosProjectDirectory, iosAppIconSetPath(assetSuffix)),
         IOS_ICONS,
         errstream,
       );
@@ -375,6 +391,7 @@ export async function copyToNativeProject(
     if (shouldCopySplash) {
       count += await copyImages(
         resourcesFor(resourcesDirectory, platform, 'splash'),
+        path.join(iosProjectDirectory, iosSplashImageSetPath(assetSuffix)),
         IOS_SPLASHES,
         errstream,
       );
@@ -385,7 +402,7 @@ export async function copyToNativeProject(
       count += await copyImages(
         resourcesFor(resourcesDirectory, platform, 'icon'),
         path.join(androidProjectDirectory, ANDROID_RES_PATH),
-        ANDROID_ICONS,
+        androidIcons(assetSuffix),
         errstream,
       );
     }
@@ -393,7 +410,7 @@ export async function copyToNativeProject(
       count += await copyImages(
         resourcesFor(resourcesDirectory, platform, 'splash'),
         path.join(androidProjectDirectory, ANDROID_RES_PATH),
-        ANDROID_SPLASHES,
+        androidSplashes(assetSuffix),
         errstream,
       );
     }

@@ -31,6 +31,7 @@ import { getOptionValue } from './utils/cli';
 export const DEFAULT_RESOURCES_DIRECTORY = 'resources';
 export const DEFAULT_FIT = 'cover';
 export const DEFAULT_POSITION = 'center';
+export const DEFAULT_ASSET_SUFFIX = '';
 
 export function getDirectory(): string {
   return process.cwd();
@@ -80,6 +81,7 @@ export function parseOptions(args: readonly string[]): Required<Options> {
     skipConfig: parseSkipConfigOption(args),
     copy: parseCopyOption(args),
     operations: parseResizeOptions(args),
+    assetSuffix: parseassetSuffix(args),
   };
 }
 
@@ -263,6 +265,10 @@ export function parseAdaptiveIconSourceFromArgs(
   }
 
   return parseSource(sourceOption);
+}
+
+export function parseassetSuffix(args: readonly string[]): string {
+  return getOptionValue(args, '--asset-suffix', DEFAULT_ASSET_SUFFIX);
 }
 
 export function parseSourceFromArgs(

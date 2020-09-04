@@ -72,6 +72,7 @@ async function CordovaRes(options: CordovaRes.Options = {}): Promise<Result> {
       position = 'center',
       transform = (image: ImageSchema, pipeline: Sharp) => pipeline,
     },
+    assetSuffix,
   } = { ...defaultOptions, ...options };
 
   const configPath = getConfigPath(directory);
@@ -136,6 +137,7 @@ async function CordovaRes(options: CordovaRes.Options = {}): Promise<Result> {
           resourcesDirectory,
           shouldCopyIcons,
           shouldCopySplash,
+          assetSuffix,
           logstream,
           errstream,
         );
@@ -266,6 +268,11 @@ namespace CordovaRes {
      * Image manipulation operations.
      */
     readonly operations?: Operations;
+
+    /**
+     * Asset suffix, defaults to blank
+     */
+    readonly assetSuffix?: string;
   }
 
   export async function runCommandLine(args: readonly string[]): Promise<void> {
