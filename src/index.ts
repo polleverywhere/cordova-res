@@ -133,6 +133,7 @@ async function CordovaRes(options: CordovaRes.Options = {}): Promise<Result> {
         await copyToNativeProject(
           platform,
           nativeProject,
+          resourcesDirectory,
           shouldCopyIcons,
           shouldCopySplash,
           logstream,

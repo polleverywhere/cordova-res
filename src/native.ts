@@ -65,11 +65,6 @@ export interface NativeResource {
 
 const debug = Debug('cordova-res:native');
 
-const SOURCE_IOS_ICON = 'resources/ios/icon';
-const SOURCE_IOS_SPLASH = 'resources/ios/splash';
-const SOURCE_ANDROID_ICON = 'resources/android/icon';
-const SOURCE_ANDROID_SPLASH = 'resources/android/splash';
-
 const IOS_APP_ICON_SET_NAME = 'AppIcon';
 const IOS_APP_ICON_SET_PATH = `App/App/Assets.xcassets/${IOS_APP_ICON_SET_NAME}.appiconset`;
 const IOS_SPLASH_IMAGE_SET_NAME = 'Splash';
@@ -324,6 +319,14 @@ const ANDROID_SPLASHES: readonly NativeResource[] = [
   },
 ];
 
+function resourcesFor(
+  resourcesDirectory: string,
+  platform: Platform,
+  assetType: string,
+) {
+  return path.join(resourcesDirectory, platform, assetType);
+}
+
 async function copyImages(
   sourcePath: string,
   targetPath: string,
@@ -352,6 +355,7 @@ async function copyImages(
 export async function copyToNativeProject(
   platform: Platform,
   nativeProject: NativeProjectConfig,
+  resourcesDirectory: string,
   shouldCopyIcons: boolean,
   shouldCopySplash: boolean,
   logstream: NodeJS.WritableStream | null,
@@ -363,16 +367,14 @@ export async function copyToNativeProject(
     const iosProjectDirectory = nativeProject.directory || 'ios';
     if (shouldCopyIcons) {
       count += await copyImages(
-        SOURCE_IOS_ICON,
-        path.join(iosProjectDirectory, IOS_APP_ICON_SET_PATH),
+        resourcesFor(resourcesDirectory, platform, 'icon'),
         IOS_ICONS,
         errstream,
       );
     }
     if (shouldCopySplash) {
       count += await copyImages(
-        SOURCE_IOS_SPLASH,
-        path.join(iosProjectDirectory, IOS_SPLASH_IMAGE_SET_PATH),
+        resourcesFor(resourcesDirectory, platform, 'splash'),
         IOS_SPLASHES,
         errstream,
       );
@@ -381,7 +383,7 @@ export async function copyToNativeProject(
     const androidProjectDirectory = nativeProject.directory || 'android';
     if (shouldCopyIcons) {
       count += await copyImages(
-        SOURCE_ANDROID_ICON,
+        resourcesFor(resourcesDirectory, platform, 'icon'),
         path.join(androidProjectDirectory, ANDROID_RES_PATH),
         ANDROID_ICONS,
         errstream,
@@ -389,7 +391,7 @@ export async function copyToNativeProject(
     }
     if (shouldCopySplash) {
       count += await copyImages(
-        SOURCE_ANDROID_SPLASH,
+        resourcesFor(resourcesDirectory, platform, 'splash'),
         path.join(androidProjectDirectory, ANDROID_RES_PATH),
         ANDROID_SPLASHES,
         errstream,
